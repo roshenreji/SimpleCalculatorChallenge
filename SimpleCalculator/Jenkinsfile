@@ -16,7 +16,7 @@ pipeline {
         
         stage('Clean'){
             steps{
-                dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCaluclator"){
+                dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
                     sh 'echo Clean'
                     sh 'mvn  clean'
                 }
@@ -24,7 +24,7 @@ pipeline {
         }
         stage('Validate'){
                 steps{
-                     dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCaluclatorn"){
+                     dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
                 
                         sh 'mvn  validate'
                      }
@@ -33,7 +33,7 @@ pipeline {
          }
         stage('Compile'){
                 steps{
-                     dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCaluclator"){
+                     dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
                  
                         sh 'echo Compile'
                          sh 'mvn  compile'
@@ -43,7 +43,7 @@ pipeline {
         }
         stage('Sonar Analysis'){
             steps{
-                 dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCaluclator"){
+                 dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
                     withSonarQubeEnv('Sonar'){
                         withMaven(maven:'maven'){
                             sh 'mvn sonar:sonar'
@@ -56,7 +56,7 @@ pipeline {
         }
         stage('Build'){
             steps {
-                 dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCaluclator"){
+                 dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
                 
                         sh 'echo Build'
                         sh 'mvn  package'
@@ -72,7 +72,7 @@ pipeline {
              }
              stage('Test'){
                  steps {
-                      dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCaluclator"){
+                      dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
                          sh 'echo Test'
                          sh 'mvn test'
                       }
@@ -85,7 +85,7 @@ pipeline {
             }
             stage('collect artifact'){
                 steps{
-                    archiveArtifacts artifacts: 'SimpleCaluclator/target/*.jar', followSymlinks: false
+                    archiveArtifacts artifacts: 'SimpleCalculator/target/*.jar', followSymlinks: false
                  }
             }      
          stage('deploy to artifactory')
@@ -97,7 +97,7 @@ pipeline {
                     spec: '''{
                     "files": [
                          {
-                             "pattern": "SimpleCaluclator/target/*.jar",
+                             "pattern": "SimpleCalculator/target/*.jar",
                              "target": "art-doc-dev-loc-new/sample/"
                         }
                      ]
