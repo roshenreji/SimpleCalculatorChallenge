@@ -54,7 +54,21 @@ pipeline {
             }
             
         }
-        stage('Build'){
+        
+             stage('Test'){
+                 steps {
+                      dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
+                         sh 'echo Test'
+                         sh 'mvn test'
+                      }
+                 }
+                 post{
+                     always {
+                         junit '**/target/surefire-reports/TEST-*.xml'
+                     }
+                 }
+            }
+            stage('Build'){
             steps {
                  dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
                 
@@ -70,19 +84,6 @@ pipeline {
                      }
                 }
              }
-             stage('Test'){
-                 steps {
-                      dir("C:/Users/roshe/.jenkins/workspace/CIChallenge1/SimpleCalculator"){
-                         sh 'echo Test'
-                         sh 'mvn test'
-                      }
-                 }
-                 post{
-                     always {
-                         junit '**/target/surefire-reports/TEST-*.xml'
-                     }
-                 }
-            }
             stage('collect artifact'){
                 steps{
                     archiveArtifacts artifacts: 'SimpleCalculator/target/*.jar', followSymlinks: false
